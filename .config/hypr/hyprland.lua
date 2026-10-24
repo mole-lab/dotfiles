@@ -31,6 +31,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("/usr/lib/polkit-kde-authentication-agent-1")
 
     hl.exec_cmd("awww-daemon")
+    hl.exec_cmd("fcitx5 -d")
     hl.exec_cmd("~/.config/hypr/scripts/wallpaper-restore.sh")
     hl.exec_cmd("sleep 2 && QSG_RENDER_LOOP=basic QS_ICON_THEME=Papirus qs")
 end)
@@ -40,12 +41,15 @@ end)
 hl.env("XCURSOR_SIZE", "14")
 hl.env("QT_QPA_PLATFORM", "wayland")
 hl.env("MOZ_ENABLE_WAYLAND", "1")
+hl.env("XMODIFIERS", "@im=fcitx")
+hl.env("QT_IM_MODULE", "fcitx")
 
 ---- INPUT ----
 
 hl.config({
     input = {
-        kb_layout = "us,latam",
+        kb_layout = "kr",
+	kb_options = "korean:ralt_hangul,korean:rctrl_hanja",
         follow_mouse = 1,
         sensitivity = 0.5,
         touchpad = {
