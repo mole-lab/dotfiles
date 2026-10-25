@@ -1,0 +1,5 @@
+# tealdeer (tldr) config
+# Korean pages first, English when a page has no Korean translation.
+# Translations can lag behind; `tldr -L en <cmd>` shows the English original.
+[search]
+languages = ["ko", "en"]

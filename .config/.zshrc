@@ -125,4 +125,7 @@ function up() {
 	fi
 	# Arch removes the running kernel's modules when the kernel is upgraded
 	[[ -d /usr/lib/modules/$(uname -r) ]] || print -P "%F{yellow}Kernel was updated: reboot when convenient.%f"
+
+	# tldr pages (docs only, no sudo)
+	tldr --update
 }
