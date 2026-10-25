@@ -27,6 +27,8 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.json" },
     -- Security: Python (pyright + ruff, venv-selector)
     { import = "lazyvim.plugins.extras.lang.python" },
+    -- Security: C (clangd from the system `clang` package, see plugins/clangd.lua)
+    { import = "lazyvim.plugins.extras.lang.clangd" },
     -- import/override with your plugins
     { import = "plugins" },
   },
