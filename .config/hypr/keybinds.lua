@@ -214,6 +214,11 @@ bind(mainMod .. " + code:86", function() zoomfunction(0.3) end, { repeating = tr
 bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set 5%+"), { locked = true, repeating = true })
 bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"), { locked = true, repeating = true })
 
+-- Clamshell: monitors.lua decides eDP-1 from the lid state, so just reload.
+-- Re-draw the wallpaper on open, since the re-enabled eDP-1 starts blank.
+bind("switch:on:Lid Switch", hl.dsp.exec_cmd("hyprctl reload"), { locked = true })
+bind("switch:off:Lid Switch", hl.dsp.exec_cmd("hyprctl reload && sleep 1 && ~/.config/hypr/scripts/wallpaper-restore.sh"), { locked = true })
+
 for i = 1, 10 do
     local key = i % 10
     bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))

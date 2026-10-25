@@ -13,8 +13,8 @@
 
 -- 3. Extend / Auto
 hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 }) 
-hl.monitor({ output = "eDP-1", mode = "preferred", position = "0x0", scale = 1 })
-hl.monitor({ output = "DP-2", mode = "3840x2160@120", position = "1920x0", scale = 1.666667 })
+hl.monitor({ output = "eDP-1", mode = "preferred", position = "2304x216", scale = 1 })
+hl.monitor({ output = "DP-2", mode = "3840x2160@120", position = "0x0", scale = 1.666667 })
 
 -- 4. Duplicate
 -- hl.monitor({ output = "eDP-1", mode = "preferred", position = "0x0", scale = 1 })
@@ -30,6 +30,29 @@ pcall(function()
     if f then
         f:close()
         dofile(path)
+    end
+end)
+
+-- CLAMSHELL
+-- Lid closed + external monitor connected -> turn off eDP-1.
+-- Runs on every config load; the lid binds in keybinds.lua call `hyprctl reload`.
+pcall(function()
+    local lid = io.open("/proc/acpi/button/lid/LID/state", "r")
+    if not lid then return end
+    local closed = lid:read("*a"):find("closed") ~= nil
+    lid:close()
+    if not closed then return end
+
+    local external = false
+    local p = io.popen("for f in /sys/class/drm/card*-*/status; do case $f in *eDP*) ;; *) cat \"$f\" ;; esac; done")
+    if p then
+        -- one status per line; "disconnected" must not match
+        external = ("\n" .. p:read("*a")):find("\nconnected") ~= nil
+        p:close()
+    end
+
+    if external then
+        hl.monitor({ output = "eDP-1", disabled = true })
     end
 end)
 
