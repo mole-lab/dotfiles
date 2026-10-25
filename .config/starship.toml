@@ -1,73 +1,80 @@
-
 "$schema" = "https://starship.rs/config-schema.json"
-
+# Powerline blocks, input on the second line. Colors are ANSI names, so they follow the kitty (wallpaper) palette.
 format = """
+[](blue)\
+$username$hostname\
+[](fg:blue bg:white)\
 $directory\
-$git_branch\
-$git_status\
-$python\
-$nodejs\
-$rust\
-$cmd_duration\
+[](fg:white bg:bright-black)\
+$git_branch$git_status\
+[ ](fg:bright-black)\
+$python$nodejs$rust$cmd_duration\
 $line_break\
-$character"""
+$sudo$status$character"""
+add_newline = true
 
-add_newline = false
+[username]
+show_always = false          # only over SSH or as root
+style_user = "bg:blue fg:black bold"
+style_root = "bg:blue fg:red bold"
+format = "[$user@]($style)"
 
-# Current directory
+[hostname]
+ssh_only = false
+ssh_symbol = " "
+style = "bg:blue fg:black bold"
+format = "[$ssh_symbol$hostname ]($style)"
+
 [directory]
-style = "bold white"
+style = "bg:white fg:black"
+format = "[ $path ]($style)[$read_only]($read_only_style)"
+read_only = " "
+read_only_style = "bg:white fg:red"
 truncation_length = 3
 truncate_to_repo = false
-read_only = " "
 
-# Git branch
 [git_branch]
 symbol = "󰘬 "
-style = "bright-black"
-format = "[$symbol$branch]($style) "
+style = "bg:bright-black fg:black"
+format = "[ $symbol$branch ]($style)"
 
-# Git status
 [git_status]
-style = "bright-black"
-format = '([$all_status$ahead_behind]($style) )'
-conflicted = "✘"
-ahead = "⇡"
-behind = "⇣"
-diverged = "⇕"
-untracked = "?"
-modified = "!"
-staged = "+"
-stashed = "$"
+style = "bg:bright-black fg:black"
+format = "[($all_status$ahead_behind )]($style)"
 
-# Python projects
 [python]
-symbol = " "
+symbol = " "
 style = "bright-black"
 format = '[$symbol$version( \($virtualenv\)) ]($style)'
 
-# Node.js projects
 [nodejs]
-symbol = " "
+symbol = " "
 style = "bright-black"
-format = '[$symbol$version ]($style)'
+format = "[$symbol$version ]($style)"
 
-# Rust projects
 [rust]
-symbol = " "
+symbol = " "
 style = "bright-black"
-format = '[$symbol$version ]($style)'
+format = "[$symbol$version ]($style)"
 
-# Show long-running commands
 [cmd_duration]
 min_time = 2000
-show_milliseconds = false
-format = '[took $duration]($style) '
 style = "bright-black"
+format = "[took $duration]($style) "
 
-# Prompt arrow
+[sudo]
+disabled = false
+symbol = "󰌾 "
+style = "bold red"
+format = "[$symbol]($style)"
+
+[status]
+disabled = false
+symbol = "✘ "
+style = "red"
+format = "[$symbol$status]($style) "
+
 [character]
 success_symbol = "[❯](white)"
-error_symbol = "[❯](bold white)"
+error_symbol = "[❯](bold red)"
 vimcmd_symbol = "[❮](white)"
-
