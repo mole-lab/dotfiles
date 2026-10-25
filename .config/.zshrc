@@ -91,3 +91,6 @@ ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=245'
 
 theme() { python3 "$HOME/.config/43pr/bin/theme.py" "$@"; }
 export PATH="$PATH:$HOME/.local/bin"
+
+# ssh-agent (systemd user socket: ssh-agent.socket)
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
