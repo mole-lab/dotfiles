@@ -39,6 +39,7 @@ end)
 
 ---- ENVIRONMENT VARIABLES ----
 
+hl.env("XCURSOR_THEME", "Bibata-Modern-Ice")
 hl.env("XCURSOR_SIZE", "24")
 hl.env("QT_QPA_PLATFORM", "wayland")
 hl.env("MOZ_ENABLE_WAYLAND", "1")
