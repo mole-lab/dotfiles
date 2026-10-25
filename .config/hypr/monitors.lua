@@ -33,28 +33,33 @@ pcall(function()
     end
 end)
 
+-- EXTERNAL MONITOR
+-- First connected non-eDP connector (e.g. "DP-2"), or nil. Name depends on the port.
+local external = nil
+pcall(function()
+    local p = io.popen("for f in /sys/class/drm/card*-*/status; do case $f in *eDP*) ;; *) [ \"$(cat \"$f\")\" = connected ] && basename \"${f%/status}\" | sed 's/^card[0-9]*-//' ;; esac; done")
+    if p then
+        external = p:read("*l")
+        p:close()
+    end
+end)
+
 -- CLAMSHELL
 -- Lid closed + external monitor connected -> turn off eDP-1.
 -- Runs on every config load; the lid binds in keybinds.lua call `hyprctl reload`.
 pcall(function()
+    if not external then return end
     local lid = io.open("/proc/acpi/button/lid/LID/state", "r")
     if not lid then return end
     local closed = lid:read("*a"):find("closed") ~= nil
     lid:close()
-    if not closed then return end
-
-    local external = false
-    local p = io.popen("for f in /sys/class/drm/card*-*/status; do case $f in *eDP*) ;; *) cat \"$f\" ;; esac; done")
-    if p then
-        -- one status per line; "disconnected" must not match
-        external = ("\n" .. p:read("*a")):find("\nconnected") ~= nil
-        p:close()
-    end
-
-    if external then
+    if closed then
         hl.monitor({ output = "eDP-1", disabled = true })
     end
 end)
+
+-- Main monitor for workspaces 1-4 (was never defined upstream).
+MONITOR1 = external or "eDP-1"
 
 -- WORKSPACE RULES
 -- https://wiki.hypr.land/Configuring/Workspace-Rules/
