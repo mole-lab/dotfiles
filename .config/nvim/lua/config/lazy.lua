@@ -42,6 +42,13 @@ require("lazy").setup({
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
   install = { colorscheme = { "tokyonight", "habamax" } },
+  -- Plugin versions are pinned in lazy-lock.json (committed to dotfiles).
+  -- The checker only fetches and shows the update count in the statusline; it never installs.
+  -- Updating on purpose:
+  --   1. :Lazy -> U (update). Note: S (sync) also updates.
+  --   2. Read the commit log Lazy shows for each plugin, then check nvim still works.
+  --   3. git diff lazy-lock.json, then commit it ("nvim: update plugins").
+  -- Rolling back: git checkout <old-commit> -- lazy-lock.json, then :Lazy restore
   checker = {
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update
