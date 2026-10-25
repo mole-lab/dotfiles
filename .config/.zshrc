@@ -104,3 +104,25 @@ function y() {
 	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd" || builtin true
 	command rm -f -- "$tmp"
 }
+
+# Weekly update routine: Arch news -> confirm -> yay (repo + AUR, review diffs) -> leftovers
+function up() {
+	print -P "%F{red}== Arch news since the last update ==%f"
+	local news="$(yay -Pw 2>/dev/null)"
+	[[ -n "$news" ]] && print -r -- "$news" || echo "(no new news)"
+	read -q "?Continue with the update? [y/N] " || { echo; return 1 }
+	echo
+
+	# Official repos first, then AUR. For AUR, answer "A" to "Diffs to show?"
+	# and check source=, checksums and install scripts before building.
+	yay || return
+
+	local pacnew="$(pacdiff -o 2>/dev/null)"
+	if [[ -n "$pacnew" ]]; then
+		print -P "%F{yellow}== Config files to merge (.pacnew/.pacsave) ==%f"
+		print -r -- "$pacnew"
+		echo "Merge with: sudo DIFFPROG='nvim -d' pacdiff"
+	fi
+	# Arch removes the running kernel's modules when the kernel is upgraded
+	[[ -d /usr/lib/modules/$(uname -r) ]] || print -P "%F{yellow}Kernel was updated: reboot when convenient.%f"
+}
