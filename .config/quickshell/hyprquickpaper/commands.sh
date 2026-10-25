@@ -53,8 +53,7 @@ esac
 
 [[ -n "$theme_img" && -f "$theme_img" ]] || exit 0
 
-# run theme.py, then make open GTK apps (Thunar etc.) reload the new colors
+# run theme.py (it also makes open GTK apps reload via hypr/scripts/gtk-reload.sh)
 setsid -f bash -c '
     python3 "$HOME/.config/43pr/bin/theme.py" wallpaper "$1"
-    "$HOME/.config/43pr/bin/reload-gtk.sh"
 ' _ "$theme_img" >>"$HOME/.cache/43pr/theme.log" 2>&1
