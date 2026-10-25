@@ -40,3 +40,8 @@ reload = ["pkill", "-USR2", "-f", "-x", "cava"]
 input  = "~/.config/43pr/templates/hypr-colors.lua"
 output = "~/.config/hypr/colors.lua"
 reload = ["hyprctl", "reload"]
+
+[nvim]
+input  = "~/.config/43pr/templates/nvim-colors.lua"
+output = "~/.cache/43pr/nvim-colors.lua"
+reload = ["pkill", "-USR1", "-x", "nvim"]
