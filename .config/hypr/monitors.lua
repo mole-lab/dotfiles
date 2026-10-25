@@ -13,6 +13,8 @@
 
 -- 3. Extend / Auto
 hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 }) 
+hl.monitor({ output = "eDP-1", mode = "preferred", position = "0x0", scale = 1 })
+hl.monitor({ output = "DP-2", mode = "3840x2160@120", position = "1920x0", scale = 1.666667 })
 
 -- 4. Duplicate
 -- hl.monitor({ output = "eDP-1", mode = "preferred", position = "0x0", scale = 1 })
