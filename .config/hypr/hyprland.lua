@@ -39,7 +39,7 @@ end)
 
 ---- ENVIRONMENT VARIABLES ----
 
-hl.env("XCURSOR_SIZE", "14")
+hl.env("XCURSOR_SIZE", "24")
 hl.env("QT_QPA_PLATFORM", "wayland")
 hl.env("MOZ_ENABLE_WAYLAND", "1")
 hl.env("XMODIFIERS", "@im=fcitx")
@@ -59,6 +59,9 @@ hl.config({
         },
     },
 })
+
+-- Wireless mouse: default speed (the global 0.5 above is too fast for it)
+hl.device({ name = "telink-wireless-receiver-mouse", sensitivity = 0 })
 
 -- LAYOUT
 hl.config({
