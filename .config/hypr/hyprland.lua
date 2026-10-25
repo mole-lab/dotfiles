@@ -50,7 +50,7 @@ hl.env("QT_IM_MODULE", "fcitx")
 hl.config({
     input = {
         kb_layout = "kr",
-	kb_options = "korean:ralt_hangul,korean:rctrl_hanja",
+	kb_options = "korean:ralt_hangul,korean:rctrl_hanja,custom:caps_hangul",
         follow_mouse = 1,
         sensitivity = 0.5,
         touchpad = {

@@ -1,0 +1,5 @@
+// User rules: define custom options, then fall back to the system rules
+! option = symbols
+  custom:caps_hangul = +custom(caps_hangul)
+
+! include %S/evdev

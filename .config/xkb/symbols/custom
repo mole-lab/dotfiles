@@ -1,0 +1,5 @@
+// Caps Lock sends Hangul (Korean/English toggle), like macOS
+partial modifier_keys
+xkb_symbols "caps_hangul" {
+    key <CAPS> { [ Hangul ] };
+};
