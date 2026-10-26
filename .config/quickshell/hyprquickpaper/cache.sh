@@ -38,7 +38,9 @@ find "$wallpaper_path" -type f \( \
     filename=$(basename "$img")
     out="$cache_path/$filename"
 
-    if [[ -f "$out" ]]; then
+    # -s (not -f): skip only if the thumbnail exists AND is non-empty, so a
+    # truncated 0-byte thumbnail from an interrupted run gets regenerated.
+    if [[ -s "$out" ]]; then
         continue
     fi
 
