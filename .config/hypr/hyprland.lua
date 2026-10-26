@@ -80,6 +80,12 @@ hl.config({
     },
 })
 
+-- XWAYLAND
+-- Don't upscale XWayland windows (blurry on fractional scale); apps scale themselves
+hl.config({
+    xwayland = { force_zero_scaling = true },
+})
+
 local f = os.getenv("HOME") .. "/.config/quickshell/state/devices.lua"
 if io.open(f, "r") then dofile(f) end
 

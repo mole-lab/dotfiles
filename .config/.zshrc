@@ -34,6 +34,13 @@ alias la='eza -a --icons=auto'
 alias lt='eza --tree --icons=auto'
 
 # --------------------------------------------------
+# Burp Suite (installed in ~/BurpSuite)
+# --------------------------------------------------
+
+alias burp='setsid -f ~/BurpSuite/BurpSuite >/dev/null 2>&1'
+alias burp-kill='pkill -f burpsuite.jar'
+
+# --------------------------------------------------
 # Completion styling
 # --------------------------------------------------
 
