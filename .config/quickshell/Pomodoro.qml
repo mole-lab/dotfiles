@@ -27,8 +27,15 @@ Scope {
         return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
     }
 
+    readonly property string soundDir: "/usr/share/sounds/freedesktop/stereo/"
+
     function notify(title, body) {
         Quickshell.execDetached(["notify-send", "-a", "Pomodoro", "-i", "alarm-symbolic", title, body]);
+    }
+
+    // Play a short cue via PipeWire; different sound per phase end.
+    function chime(file) {
+        Quickshell.execDetached(["pw-play", soundDir + file]);
     }
 
     // Left click: start / pause. Starting a finished timer re-arms it first.
@@ -63,9 +70,11 @@ Scope {
                 if (root.phase === "focus") {
                     root.phase = "break";
                     root.notify("집중 끝", "휴식 " + Math.floor(root.preset.brk / 60) + "분 — 화면에서 눈을 떼세요.");
+                    root.chime("complete.oga");          // 집중 끝: 완료음
                 } else {
                     root.phase = "focus";
                     root.notify("휴식 끝", "집중 " + Math.floor(root.preset.focus / 60) + "분 시작할 준비가 되면 클릭하세요.");
+                    root.chime("alarm-clock-elapsed.oga"); // 휴식 끝: 알람음
                 }
                 root.running = false;
                 root.remaining = root.phaseLength;
