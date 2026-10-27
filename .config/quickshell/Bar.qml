@@ -241,6 +241,7 @@ Scope {
         { id: "ws",       l: "Workspaces" },
         { id: "tasks",    l: "Open apps" },
         { id: "media",    l: "Media" },
+        { id: "pomo",     l: "Pomodoro" },
         { id: "volume",   l: "Volume" },
         { id: "battery",  l: "Battery" },
         { id: "net",      l: "Network",       cmd: "qs ipc call settings network",
@@ -257,7 +258,7 @@ Scope {
     readonly property var moduleIds: moduleDefs.map(d => d.id)
     readonly property var defMap: moduleDefs.reduce((m, d) => { m[d.id] = d; return m; }, {})
     readonly property var comps: ({
-        stats: statsC, ws: wsC, tasks: tasksC, media: mediaC, volume: volumeC, battery: batteryC, icon: iconC
+        stats: statsC, ws: wsC, tasks: tasksC, media: mediaC, pomo: pomoC, volume: volumeC, battery: batteryC, icon: iconC
     })
 
     function csv(str) { return str === "" ? [] : str.split(","); }
@@ -1030,6 +1031,33 @@ Scope {
                 height: 18
                 rotation: root.vertical ? (cfg.position === "left" ? -90 : 90) : 0
             }
+        }
+    }
+
+    Component {
+        id: pomoC
+        Mod {
+            readonly property bool focusPhase: Pomodoro.phase === "focus"
+            // nf-fa clock for focus, coffee for break (BMP PUA glyphs, always present).
+            glyph: focusPhase ? "" : ""
+            glyphSize: root.sz.icon
+            text: Pomodoro.display
+            bold: Pomodoro.running
+            // Running focus = accent, running break = ok/green, paused = dim.
+            color: !Pomodoro.running ? Theme.textDim
+                 : focusPhase       ? Theme.accent
+                                    : Theme.ok
+            active: Pomodoro.running && focusPhase
+
+            tip: "Pomodoro " + Pomodoro.preset.label + " · "
+                + (focusPhase ? "집중" : "휴식")
+                + (Pomodoro.running ? " 진행 중" : " 멈춤")
+            primaryHint: Pomodoro.running ? "Pause" : "Start"
+            secondaryHint: "Reset this phase"
+            tertiaryHint: "Switch 25/5 <-> 50/10"
+            onPrimary: Pomodoro.toggle()
+            onSecondary: Pomodoro.reset()
+            onTertiary: Pomodoro.cyclePreset()
         }
     }
 
