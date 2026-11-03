@@ -5,6 +5,9 @@ local ok, c = pcall(dofile, os.getenv("HOME") .. "/.config/hypr/colors.lua")
 if ok and type(c) == "table" then colors = c end
 
 hl.config({ render = { expand_undersized_textures = false}})
+-- Disable auto HDR switching on fullscreen: the external monitor runs in 8-bit,
+-- so the switch caused a 1-2s black screen and a "not in 10-bit mode" warning.
+hl.config({ render = { cm_auto_hdr = 0 }})
 hl.config({
     general = {
         gaps_in = 4,
