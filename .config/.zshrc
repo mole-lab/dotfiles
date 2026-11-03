@@ -41,6 +41,12 @@ alias burp='setsid -f ~/BurpSuite/BurpSuite >/dev/null 2>&1'
 alias burp-kill='pkill -f burpsuite.jar'
 
 # --------------------------------------------------
+# Personal cheatsheet (~/.config/cheatsheet, kept outside the repo)
+# --------------------------------------------------
+
+[[ -r ~/.config/cheatsheet/cheatsheet.zsh ]] && source ~/.config/cheatsheet/cheatsheet.zsh
+
+# --------------------------------------------------
 # Completion styling
 # --------------------------------------------------
 
